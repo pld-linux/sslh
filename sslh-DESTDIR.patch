@@ -1,0 +1,13 @@
+--- sslh-1.10/Makefile~	2011-11-26 19:06:58.000000000 +0100
++++ sslh-1.10/Makefile	2012-02-17 08:44:17.021050673 +0100
+@@ -50,8 +50,8 @@
+ 
+ # generic install: install binary and man page
+ install: sslh $(MAN)
+-	install -D sslh-fork $(PREFIX)/sbin/sslh
+-	install -D -m 0644 $(MAN) $(PREFIX)/share/man/man8/$(MAN)
++	install -D sslh-fork $(DESTDIR)$(PREFIX)/sbin/sslh
++	install -D -m 0644 $(MAN) $(DESTDIR)$(PREFIX)/share/man/man8/$(MAN)
+ 
+ # "extended" install for Debian: install startup script
+ install-debian: install sslh $(MAN)
