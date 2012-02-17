@@ -1,0 +1,12 @@
+[Unit]
+Description=SSL/SSH multiplexer
+After=network.target syslog.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/sslh.pid
+EnvironmentFile=/etc/sysconfig/sslh
+ExecStart=/usr/sbin/sslh -u sslh -P /var/run/sslh.pid $SSLH_OPTIONS
+
+[Install]
+WantedBy=multi-user.target
