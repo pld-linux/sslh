@@ -1,0 +1,11 @@
+--- sslh-1.10/sslh.pod~	2011-11-26 22:15:31.000000000 +0100
++++ sslh-1.10/sslh.pod	2012-02-17 22:58:05.626949210 +0100
+@@ -154,7 +154,7 @@
+ Start-up script. The standard actions B<start>, B<stop> and
+ B<restart> are supported.
+ 
+-=item F</etc/default/sslh>
++=item F</etc/sysconfig/sslh>
+ 
+ Server configuration. These are environment variables
+ loaded by the start-up script and passed to B<sslh> as
