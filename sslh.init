@@ -1,0 +1,85 @@
+#!/bin/sh
+#
+# chkconfig:	2345 85 15
+#
+# description:	proxy ssl and ssh connections
+#
+# processname:	sslh
+# pidfile:	/var/run/sslh.pid
+# config:	/etc/sysconfig/sslh
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get service config
+[ -f /etc/sysconfig/sslh ] && . /etc/sysconfig/sslh
+
+start() {
+	# Check if the service is already running?
+	if [ -f /var/lock/subsys/sslh ]; then
+		msg_already_running "sslh"
+		return
+	fi
+
+	msg_starting "sslh"
+	/usr/sbin/sslh -u sslh -P /var/run/sslh.pid $SSLH_OPTIONS
+	RETVAL=$?
+	if [ $RETVAL -eq 0 ]; then
+		touch /var/lock/subsys/sslh
+		ok
+	else
+		fail
+	fi
+}
+
+stop() {
+	if [ ! -f /var/lock/subsys/sslh ]; then
+		msg_not_running "sslh"
+		return
+	fi
+
+	msg_stopping "sslh"
+	killproc sslh
+	rm -f /var/lock/subsys/sslh >/dev/null 2>&1
+}
+
+condrestart() {
+	if [ ! -f /var/lock/subsys/sslh ]; then
+		msg_not_running "sslh"
+		RETVAL=$1
+		return
+	fi
+
+	stop
+	start
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
+	;;
+  status)
+	status sslh
+	exit $?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
