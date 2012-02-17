@@ -1,0 +1,7 @@
+# Customized settings for sslh
+# Check out "man sslh" for detailed setup options
+
+SSLH_OPTIONS="--listen 0.0.0.0:443 --ssh localhost:22 --ssl localhost:443"
+
+# Nice level for sslh
+SERVICE_RUN_NICE_LEVEL="-1"
