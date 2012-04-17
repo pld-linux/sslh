@@ -18,13 +18,14 @@ URL:		http://www.rutschle.net/sslh.shtml
 BuildRequires:	libwrap-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	rpmbuild(macros) >= 1.644
-Requires:	systemd-units >= 38
 Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/groupadd
+Requires(post,preun,postun):	systemd-units >= 38
+Requires:	systemd-units >= 38
 Provides:	group(sslh)
 Provides:	user(sslh)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
