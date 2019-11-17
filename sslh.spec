@@ -1,20 +1,17 @@
 Summary:	sslh - ssl/ssh multiplexer
 Summary(pl.UTF-8):	multiplekser ssl/ssh
 Name:		sslh
-Version:	1.10
+Version:	1.20
 Release:	0.1
 License:	GPL v2+
 Group:		Applications
-Source0:	http://www.rutschle.net/tech/%{name}-%{version}.tar.gz
-# Source0-md5:	bc34e9a4770d634633e70589c72708cc
+Source0:	http://www.rutschle.net/tech/sslh/%{name}-v%{version}.tar.gz
+# Source0-md5:	6a69c6128d0349e5fb22167675d18aee
 Source1:	%{name}.sysconfig
 Source2:	%{name}.init
 Source3:	%{name}.service
-Patch0:		%{name}-DESTDIR.patch
-Patch1:		%{name}-LDFLAGS.patch
-Patch2:		%{name}-pidfile.patch
 Patch3:		%{name}-man.patch
-URL:		http://www.rutschle.net/sslh.shtml
+URL:		http://www.rutschle.net/tech/sslh/README.html
 BuildRequires:	libwrap-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	rpmbuild(macros) >= 1.644
@@ -43,10 +40,7 @@ tych usług na porcie 443 (n.p. zza firmowego firewalla, który rzadko
 kiedy blokuje połączenia na ten port) równolegle z usługami HTTPS.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup -q -n %{name}-v%{version}
 %patch3 -p1
 
 %build
@@ -64,9 +58,9 @@ install -d $RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{systemdunitdir}}
 	PREFIX="%{_prefix}" \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/sslh
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/sslh
-install %{SOURCE3} $RPM_BUILD_ROOT%{systemdunitdir}
+cp -p %{SOURCE1} $RPM_BUILD_ROOT/etc/sysconfig/sslh
+install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/sslh
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{systemdunitdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
