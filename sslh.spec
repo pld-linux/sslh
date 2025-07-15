@@ -41,7 +41,7 @@ kiedy blokuje połączenia na ten port) równolegle z usługami HTTPS.
 
 %prep
 %setup -q -n %{name}-v%{version}
-%patch3 -p1
+%patch -P3 -p1
 
 %build
 %{__make} \
